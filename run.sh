@@ -15,9 +15,9 @@ module purge
 module load GCC/12.3.0
 module load OpenMPI/4.1.5
 module load PyTorch/2.1.2-CUDA-12.1.1
-#module load SciPy-bundle  
+module load SciPy-bundle  
 
-source ~/newscoretest/bin/activate  #Change environment
+source ~/ArcherDissEnv3/bin/activate  #Change environment
 
 srun python ProbScoreCard.py
 
