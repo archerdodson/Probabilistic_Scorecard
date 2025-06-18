@@ -19,6 +19,8 @@ module load PyTorch/2.1.2-CUDA-12.1.1
 
 source ~/ArcherDissEnv3/bin/activate  #Change environment
 
+pip show zarr numcodecs xarray-beam rechunker
+
 srun python ProbScoreCard.py
 
 deactivate

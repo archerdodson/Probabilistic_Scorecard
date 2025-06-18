@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/gpfs/home/stats/stubxk/Probabilistic_Scorecard/ProbScoreCard.py", line 8, in <module>
+    from weatherbench2.evaluation import evaluate_in_memory
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/weatherbench2/evaluation.py", line 36, in <module>
+    import xarray_beam as xbeam
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/xarray_beam/__init__.py", line 28, in <module>
+    from xarray_beam._src.dataset import (
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/xarray_beam/_src/dataset.py", line 41, in <module>
+    from xarray_beam._src import zarr
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/xarray_beam/_src/zarr.py", line 40, in <module>
+    from xarray_beam._src import rechunk
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/xarray_beam/_src/rechunk.py", line 36, in <module>
+    from rechunker import algorithm
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/rechunker/__init__.py", line 8, in <module>
+    from .api import Rechunked, rechunk
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/rechunker/api.py", line 9, in <module>
+    import zarr
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/zarr/__init__.py", line 3, in <module>
+    from zarr.convenience import (
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/zarr/convenience.py", line 8, in <module>
+    from zarr._storage.store import data_root, meta_root, assert_zarr_v3_api_available
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/zarr/_storage/store.py", line 10, in <module>
+    from zarr.meta import Metadata2, Metadata3
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/zarr/meta.py", line 10, in <module>
+    from zarr.util import json_dumps, json_loads
+  File "/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/zarr/util.py", line 34, in <module>
+    from numcodecs.blosc import cbuffer_sizes, cbuffer_metainfo
+ImportError: cannot import name 'cbuffer_sizes' from 'numcodecs.blosc' (/gpfs/home/stats/stubxk/ArcherDissEnv3/lib/python3.11/site-packages/numcodecs/blosc.cpython-311-x86_64-linux-gnu.so)
+srun: error: gpu007: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=1509791.0
