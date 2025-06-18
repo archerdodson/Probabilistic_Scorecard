@@ -14,14 +14,14 @@ from einops import rearrange
 from itertools import product
 import cython
 import matplotlib.pyplot  as plt
-import tqdm
-import line_profiler
+#import tqdm
+#import line_profiler
 from datetime import datetime, timedelta
-from multiprocessing import Pool, cpu_count
-import time
+#from multiprocessing import Pool, cpu_count
+#import time
 from weatherbench2.metrics import MSE, ACC
 from weatherbench2.regions import SliceRegion
-import seaborn as sns
+#import seaborn as sns
 from dateutil.relativedelta import relativedelta
 
 
@@ -55,115 +55,115 @@ southernweights = weights[0:12]
 tropicweights = weights[12:20]
 northernweights = weights[20:32]
 
-def pkparallel_lat_split(lat_chunk, observations_chunk, forecasts_chunk, zero):
-    """
-    Function to compute results for a chunk of latitudes.
-    """
-    static_kernel = sigkernel.RBFKernel(sigma=1)
-    dyadic_order = 1
-    signature_kernel = sigkernel.SigKernel(static_kernel, dyadic_order)
+# def pkparallel_lat_split(lat_chunk, observations_chunk, forecasts_chunk, zero):
+#     """
+#     Function to compute results for a chunk of latitudes.
+#     """
+#     static_kernel = sigkernel.RBFKernel(sigma=1)
+#     dyadic_order = 1
+#     signature_kernel = sigkernel.SigKernel(static_kernel, dyadic_order)
 
-    time = forecasts_chunk.shape[0] #(time, ens, predelta, long, lat)
-    ens = forecasts_chunk.shape[1]
-    lead = forecasts_chunk.shape[2]
-    latlength = forecasts_chunk.shape[4]
+#     time = forecasts_chunk.shape[0] #(time, ens, predelta, long, lat)
+#     ens = forecasts_chunk.shape[1]
+#     lead = forecasts_chunk.shape[2]
+#     latlength = forecasts_chunk.shape[4]
 
-    pkarray = np.zeros((latlength, time, lead, 1))
+#     pkarray = np.zeros((latlength, time, lead, 1))
 
-    for lat in range(latlength):
-        for lag in range(2, lead + 1):
-            for t in range(time):
-                # Forecast path
-                forpath = torch.tensor(forecasts_chunk[t,:,0:lag, :, lat], dtype=torch.double)
-                 # shape: [ens, lag, dim]
+#     for lat in range(latlength):
+#         for lag in range(2, lead + 1):
+#             for t in range(time):
+#                 # Forecast path
+#                 forpath = torch.tensor(forecasts_chunk[t,:,0:lag, :, lat], dtype=torch.double)
+#                  # shape: [ens, lag, dim]
 
-                # Add zero basepoint
-                zeros = torch.zeros(ens, 1, forpath.shape[2], dtype=forpath.dtype)
-                forpath = torch.cat([zeros, forpath], dim=1)
+#                 # Add zero basepoint
+#                 zeros = torch.zeros(ens, 1, forpath.shape[2], dtype=forpath.dtype)
+#                 forpath = torch.cat([zeros, forpath], dim=1)
 
-                # Time channel
-                time_vec = torch.linspace(0, 1, steps=forpath.shape[1], dtype=forpath.dtype)
-                time_vec = time_vec.view(1, -1, 1)
-                time_vec = time_vec.expand(forpath.shape[0], -1, 1)
-                forpath = torch.cat([forpath, time_vec], dim=-1)
+#                 # Time channel
+#                 time_vec = torch.linspace(0, 1, steps=forpath.shape[1], dtype=forpath.dtype)
+#                 time_vec = time_vec.view(1, -1, 1)
+#                 time_vec = time_vec.expand(forpath.shape[0], -1, 1)
+#                 forpath = torch.cat([forpath, time_vec], dim=-1)
 
-                # Observation path
-                obspath = torch.tensor(observations_chunk[t:t+lag, :, lat], dtype=torch.double)
-                obspath = obspath.unsqueeze(0)
+#                 # Observation path
+#                 obspath = torch.tensor(observations_chunk[t:t+lag, :, lat], dtype=torch.double)
+#                 obspath = obspath.unsqueeze(0)
 
-                zero_obs = torch.zeros(1, 1, obspath.shape[2], dtype=obspath.dtype)
-                obspath = torch.cat([zero_obs, obspath], dim=1)
+#                 zero_obs = torch.zeros(1, 1, obspath.shape[2], dtype=obspath.dtype)
+#                 obspath = torch.cat([zero_obs, obspath], dim=1)
 
-                time_vec_obs = torch.linspace(0, 1, steps=obspath.shape[1], dtype=obspath.dtype)
-                time_vec_obs = time_vec_obs.view(1, -1, 1)
-                obspath = torch.cat([obspath, time_vec_obs], dim=-1)
-
-
-                # Now compute scoring rule components
-                Score = signature_kernel.compute_scoring_rule(forpath,obspath)
+#                 time_vec_obs = torch.linspace(0, 1, steps=obspath.shape[1], dtype=obspath.dtype)
+#                 time_vec_obs = time_vec_obs.view(1, -1, 1)
+#                 obspath = torch.cat([obspath, time_vec_obs], dim=-1)
 
 
-                pkarray[lat, t, lag-1, 0] = Score.item()
+#                 # Now compute scoring rule components
+#                 Score = signature_kernel.compute_scoring_rule(forpath,obspath)
 
-    return pkarray
+
+#                 pkarray[lat, t, lag-1, 0] = Score.item()
+
+#     return pkarray
 
 
-def pkparallel(observations, forecasts, zero, region, batch_size=None):
-    """
-    Main function to parallelize computation across latitudes.
-    """
-    latlength = forecasts.shape[4]
+# def pkparallel(observations, forecasts, zero, region, batch_size=None):
+#     """
+#     Main function to parallelize computation across latitudes.
+#     """
+#     latlength = forecasts.shape[4]
 
-    # Determine the number of processes (default to number of cores)
-    num_cores = cpu_count()
-    print(num_cores)
-    batch_size = batch_size or (latlength // num_cores + (latlength % num_cores > 0))
+#     # Determine the number of processes (default to number of cores)
+#     num_cores = cpu_count()
+#     print(num_cores)
+#     batch_size = batch_size or (latlength // num_cores + (latlength % num_cores > 0))
 
-    # Split data into chunks by latitude
-    lat_chunks = [
-        range(i, min(i + batch_size, latlength))
-        for i in range(0, latlength, batch_size)
-    ]
-    print(lat_chunks)
+#     # Split data into chunks by latitude
+#     lat_chunks = [
+#         range(i, min(i + batch_size, latlength))
+#         for i in range(0, latlength, batch_size)
+#     ]
+#     print(lat_chunks)
 
-    observations_chunks = [
-        observations[:, :, lat_chunk]
-        for lat_chunk in lat_chunks
-    ]
+#     observations_chunks = [
+#         observations[:, :, lat_chunk]
+#         for lat_chunk in lat_chunks
+#     ]
 
-    forecasts_chunks = [
-        forecasts[:, :, :, :, lat_chunk]
-        for lat_chunk in lat_chunks
-    ]
+#     forecasts_chunks = [
+#         forecasts[:, :, :, :, lat_chunk]
+#         for lat_chunk in lat_chunks
+#     ]
 
-    # Process chunks in parallel
-    with Pool(processes=min(num_cores, len(lat_chunks))) as pool:
-        results = pool.starmap(
-            pkparallel_lat_split,
-            [(lat_chunk, obs_chunk, for_chunk, zero)
-             for lat_chunk, obs_chunk, for_chunk in zip(
-                 lat_chunks, observations_chunks, forecasts_chunks
-             )]
-        )
+#     # Process chunks in parallel
+#     with Pool(processes=min(num_cores, len(lat_chunks))) as pool:
+#         results = pool.starmap(
+#             pkparallel_lat_split,
+#             [(lat_chunk, obs_chunk, for_chunk, zero)
+#              for lat_chunk, obs_chunk, for_chunk in zip(
+#                  lat_chunks, observations_chunks, forecasts_chunks
+#              )]
+#         )
 
     
-    if region == 'Tropics':
-        usedweights = tropicweights
-    elif region == 'Northern':
-        usedweights = northernweights
-    else:
-        usedweights = southernweights
+#     if region == 'Tropics':
+#         usedweights = tropicweights
+#     elif region == 'Northern':
+#         usedweights = northernweights
+#     else:
+#         usedweights = southernweights
 
 
-    # Combine results from all chunks
-    #pkarraylat = np.sum(results, axis=0)
-    pkarray = np.concatenate(results, axis=0) #Against lat chunks
-    # pkarraylat = np.sum(pkarray * usedweights[:, None, None, None], axis=0)
-    # pktime = np.mean(pkarraylat, axis=0)
-    # distance = pktime[:, 1] + pktime[:, 2] - 2 * pktime[:, 0]
-    # score = pktime[:, 1] - 2 * pktime[:, 0]
+#     # Combine results from all chunks
+#     #pkarraylat = np.sum(results, axis=0)
+#     pkarray = np.concatenate(results, axis=0) #Against lat chunks
+#     # pkarraylat = np.sum(pkarray * usedweights[:, None, None, None], axis=0)
+#     # pktime = np.mean(pkarraylat, axis=0)
+#     # distance = pktime[:, 1] + pktime[:, 2] - 2 * pktime[:, 0]
+#     # score = pktime[:, 1] - 2 * pktime[:, 0]
 
-    return pkarray #, pkarraylat, distance, score
+#     return pkarray #, pkarraylat, distance, score
 
 def pkparallel_cuda(observations, forecasts, zero, region):
     """
