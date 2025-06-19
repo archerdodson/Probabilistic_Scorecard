@@ -18,9 +18,9 @@ module load PyTorch/2.1.2-CUDA-12.1.1
 
 #module load SciPy-bundle  
 
-source ~/newenv2/bin/activate  #Change environment
+source ~/newenv4/bin/activate  #Change environment
 
-unset PYTHONPATH
+#unset PYTHONPATH
 
 #pip show zarr numcodecs xarray-beam rechunker pandas torch
 

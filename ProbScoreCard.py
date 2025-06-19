@@ -25,6 +25,7 @@ from weatherbench2.regions import SliceRegion
 #import seaborn as sns
 from dateutil.relativedelta import relativedelta
 import ScorecardFunctions2 as SCF
+import gcsfs
 
 
 import apache_beam
