@@ -10,8 +10,8 @@ from weatherbench2 import config
 import numpy as np
 import sigkernel
 import torch
-from einops import rearrange
-from itertools import product
+#from einops import rearrange
+#from itertools import product
 import cython
 #import matplotlib.pyplot  as plt
 #import tqdm
