@@ -15,11 +15,14 @@ module purge
 module load GCC/12.3.0
 module load OpenMPI/4.1.5
 module load PyTorch/2.1.2-CUDA-12.1.1
+
 #module load SciPy-bundle  
 
 source ~/envcard/bin/activate  #Change environment
 
-pip show zarr numcodecs xarray-beam rechunker
+unset PYTHONPATH
+
+pip show zarr numcodecs xarray-beam rechunker pandas torch
 
 srun python ProbScoreCard.py
 
