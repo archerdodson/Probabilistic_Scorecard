@@ -22,7 +22,7 @@ source ~/newenv2/bin/activate  #Change environment
 
 #unset PYTHONPATH
 
-#pip show zarr numcodecs xarray-beam rechunker pandas torch
+pip show zarr numcodecs xarray-beam rechunker pandas torch weatherbench2
 
 srun python ProbScoreCard.py
 
