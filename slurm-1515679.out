@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/gpfs/home/stats/stubxk/Probabilistic_Scorecard/ScoreCardWeather.py", line 11, in <module>
+    from einops import rearrange
+ModuleNotFoundError: No module named 'einops'
+srun: error: gpu010: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=1515679.0

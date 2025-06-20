@@ -1,0 +1,33 @@
+initial
+first
+loaded
+yo
+begun
+Traceback (most recent call last):
+  File "/gpfs/home/stats/stubxk/Probabilistic_Scorecard/ProbScoreCard.py", line 84, in <module>
+    geo850 = geo850 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='geopotential',levelval= 850, region='no')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home/stats/stubxk/Probabilistic_Scorecard/ScorecardFunctions2.py", line 235, in workflowfullparallelmonthly
+    pkarray = pkparallel_cuda(ob,fo,zero,region) #, pkarraylat, distance, score
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/gpfs/home/stats/stubxk/Probabilistic_Scorecard/ScorecardFunctions2.py", line 215, in pkparallel_cuda
+    Score = signature_kernel.compute_scoring_rule(forpath, obspath)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/sigkernel/sigkernel.py", line 156, in compute_scoring_rule
+    K_Xy = self.compute_Gram(X, y, sym=False, max_batch=max_batch)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/sigkernel/sigkernel.py", line 102, in compute_Gram
+    K = _SigKernelGram.apply(X, Y, self.static_kernel, self.dyadic_order, sym, self._naive_solver)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scrtp/avon/eb/software/PyTorch/2.1.2-foss-2023a-CUDA-12.1.1/lib/python3.11/site-packages/torch/autograd/function.py", line 539, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/sigkernel/sigkernel.py", line 354, in forward
+    G_static_ = tile(tile(G_static_, 2, 2**dyadic_order)/float(2**dyadic_order), 3, 2**dyadic_order)/float(2**dyadic_order)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/sigkernel/sigkernel.py", line 579, in tile
+    order_index = torch.LongTensor(np.concatenate([init_dim * np.arange(n_tile) + i for i in range(init_dim)])).to(a.device)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: need at least one array to concatenate
+srun: error: node140: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=1515590.0
