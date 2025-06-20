@@ -227,10 +227,12 @@ def pkparallel_cuda(observations, forecasts, zero, region):
     return pkarray_cpu
 
 
-def workflowfullparallelmonthly(observations, forecasts, days, lag,zero, month, variableval,levelval, region):        
+def workflowfullparallelmonthly(observations, forecasts, days, lag,zero, month, variableval,levelval, region, switch = False):        
     ob, fo = timecuttingmonthly(observations,forecasts,days,lag+zero,month, variableval,levelval)
     ob = ob.values #(time, long, lat)
     fo = fo[:,:,0:lag,:,:].values #(time, ens, predelta, long, lat)
+    if switch:
+        fo = fo.swapaxes(1,0)
     ob, fo = scalebyobsadjusted(ob,fo,fo.shape[3])
     pkarray = pkparallel_cuda(ob,fo,zero,region) #, pkarraylat, distance, score
 

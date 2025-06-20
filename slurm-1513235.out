@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "ProbScoreCard.py", line 4, in <module>
-    import weatherbench2
-ModuleNotFoundError: No module named 'weatherbench2'
-srun: error: gpu013: task 0: Exited with exit code 1
-srun: launch/slurm: _step_signal: Terminating StepId=1513235.0

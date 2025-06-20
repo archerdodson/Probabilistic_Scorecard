@@ -47,32 +47,32 @@ print("begun")
 
 geo850 = np.zeros((32,6,31))
 for monthval in range(12):
-    geo850 = geo850 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=0, variableval='geopotential',levelval= 850, region='no')
+    geo850 = geo850 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=monthval, variableval='geopotential',levelval= 850, region='no')
 np.save('geo850.npy', geo850)
 
 geo500 = np.zeros((32,6,31))
 for monthval in range(12):
-    geo500 = geo500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=0, variableval='geopotential',levelval= 500, region='no')
+    geo500 = geo500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=monthval, variableval='geopotential',levelval= 500, region='no')
 np.save('geo500.npy', geo500)
 
 temp850 = np.zeros((32,6,31))
 for monthval in range(12):
-    temp850 = temp850 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=0, variableval='temperature',levelval= 850, region='no')
+    temp850 = temp850 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=monthval, variableval='temperature',levelval= 850, region='no')
 np.save('temp850.npy', temp850)
 
 temp500 = np.zeros((32,6,31))
 for monthval in range(12):
-    temp500 = temp500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=0, variableval='temperature',levelval= 500, region='no')
+    temp500 = temp500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=monthval, variableval='temperature',levelval= 500, region='no')
 np.save('temp500.npy', temp500)
 
 u500 = np.zeros((32,6,31))
 for monthval in range(12):
-    u500 = u500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=0, variableval='u_component_of_wind',levelval= 500, region='no')
+    u500 = u500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=monthval, variableval='u_component_of_wind',levelval= 500, region='no')
 np.save('u500.npy', u500)
 
 v500 = np.zeros((32,6,31))
 for monthval in range(12):
-    v500 = v500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=0, variableval='v_component_of_wind',levelval= 500, region='no')
+    v500 = v500 + SCF.workflowfullparallelmonthly(observationsera, ifsens_12h, 3, 31,0, month=monthval, variableval='v_component_of_wind',levelval= 500, region='no')
 np.save('v500.npy', v500)
 
 
@@ -81,32 +81,32 @@ np.save('v500.npy', v500)
 
 geo850 = np.zeros((32,6,31))
 for monthval in range(12):
-    geo850 = geo850 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='geopotential',levelval= 850, region='no')
+    geo850 = geo850 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=monthval, variableval='geopotential',levelval= 850, region='no', switch = True)
 np.save('geo850gcm.npy', geo850)
 
 geo500 = np.zeros((32,6,31))
 for monthval in range(12):
-    geo500 = geo500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='geopotential',levelval= 500, region='no')
+    geo500 = geo500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=monthval, variableval='geopotential',levelval= 500, region='no', switch = True)
 np.save('geo500gcm.npy', geo500)
 
 temp850 = np.zeros((32,6,31))
 for monthval in range(12):
-    temp850 = temp850 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='temperature',levelval= 850, region='no')
+    temp850 = temp850 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=monthval, variableval='temperature',levelval= 850, region='no', switch = True)
 np.save('temp850gcm.npy', temp850)
 
 temp500 = np.zeros((32,6,31))
 for monthval in range(12):
-    temp500 = temp500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='temperature',levelval= 500, region='no')
+    temp500 = temp500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=monthval, variableval='temperature',levelval= 500, region='no', switch = True)
 np.save('temp500gcm.npy', temp500)
 
 u500 = np.zeros((32,6,31))
 for monthval in range(12):
-    u500 = u500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='u_component_of_wind',levelval= 500, region='no')
+    u500 = u500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=monthval, variableval='u_component_of_wind',levelval= 500, region='no', switch = True)
 np.save('u500gcm.npy', u500)
 
 v500 = np.zeros((32,6,31))
 for monthval in range(12):
-    v500 = v500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=0, variableval='v_component_of_wind',levelval= 500, region='no')
+    v500 = v500 + SCF.workflowfullparallelmonthly(observationsera, gcmens_cut, 3, 31,0, month=monthval, variableval='v_component_of_wind',levelval= 500, region='no', switch = True)
 np.save('v500gcm.npy', v500)
 
 
