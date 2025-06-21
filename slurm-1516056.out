@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/gpfs/home/stats/stubxk/Probabilistic_Scorecard/ScoreCardWeather.py", line 78, in <module>
+    evaluate_in_memory(data_config, eval_configs) 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/evaluation.py", line 494, in evaluate_in_memory
+    _evaluate_all_metrics(eval_name, eval_config, data_config)
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/evaluation.py", line 457, in _evaluate_all_metrics
+    results = _metric_and_region_loop(forecast, truth, eval_config)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/evaluation.py", line 406, in _metric_and_region_loop
+    tmp_result = eval_fn(forecast=forecast, truth=truth, region=region)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/metrics.py", line 463, in compute
+    result = super().compute(forecast, truth, region=region)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/metrics.py", line 104, in compute
+    return self.compute_chunk(forecast, truth, region=region).mean(avg_dim)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/metrics.py", line 521, in compute_chunk
+    return CRPSSkill(self.ensemble_dim).compute_chunk(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/metrics.py", line 557, in compute_chunk
+    _pointwise_crps_skill(forecast, truth, self.ensemble_dim),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/metrics.py", line 646, in _pointwise_crps_skill
+    _get_n_ensemble(forecast, ensemble_dim)  # Will raise if no ensembles.
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/stats/stubxk/newenv4/lib/python3.11/site-packages/weatherbench2/metrics.py", line 433, in _get_n_ensemble
+    raise ValueError(f"{ensemble_dim=} not found in {ds.dims=}")
+ValueError: ensemble_dim='realization' not found in ds.dims=Frozen({'init_time': 6, 'number': 50, 'lead_time': 61, 'level': 2, 'longitude': 64, 'latitude': 32})
+srun: error: gpu010: task 0: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=1516056.0

@@ -29,12 +29,12 @@ obs_path = 'gs://weatherbench2/datasets/era5/1959-2023_01_10-6h-64x32_equiangula
 pathsIFS = config.Paths(
     forecast='gs://weatherbench2/datasets/ifs_ens/2018-2022-64x32_equiangular_conservative.zarr',
     obs=obs_path,
-    output_dir='./',   # Directory to save evaluation results
+    output_dir='results/',   # Directory to save evaluation results
 )
 pathsgcm = config.Paths(
     forecast='gs://weatherbench2/datasets/neuralgcm_ens/2020-64x32_equiangular_conservative.zarr',
     obs=obs_path,
-    output_dir='./',   # Directory to save evaluation results
+    output_dir='results/',   # Directory to save evaluation results
 )
 
 startdate = {0:'2020-01-01',1:'2020-02-01',2:'2020-03-01',3:'2020-04-01',4:'2020-05-01',5:'2020-06-01',6:'2020-07-01',7:'2020-08-01',8:'2020-09-01',9:'2020-10-01',10:'2020-11-01',11:'2020-12-01'}
